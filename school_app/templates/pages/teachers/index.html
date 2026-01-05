@@ -1,0 +1,99 @@
+{% extends 'index.html'%}
+{% load static %}
+{% block content %}
+    <section class="content">
+
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12 connectedSortable">
+
+              <!-- TO DO List -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <i class="glyphicon-plus"></i>
+                  <h3 class="box-title">
+                      <a href="/teachers/show" >Add Teacher</a>
+                      {% if messages %}
+                        {% for message in messages %}
+                            <span  class="text-red" style="text-align: center; font-size: 16px; padding: 10px 80px">{{ message }}</span>
+                        {% endfor %}
+                      {% endif %}
+                  </h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body">
+
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Gender</th>
+                            <th>Date Of Birth</th>
+                            <th>Address</th>
+                              <th>Salary</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for teacher in teachers %}
+                            	<tr>
+                                    <td>{{ teacher.id }}</td>
+                                    <td>{{ teacher.last_name }}</td>
+                                    <td>{{ teacher.first_name }}</td>
+                                    <td>{{ teacher.get_gender_display }}</td>
+                                    <td>{{ teacher.dob }}</td>
+                                    <td>{{ teacher.address }}</td>
+                                    <td>{{ teacher.salary }}</td>
+                                    <td>
+                                        <a class="glyphicon glyphicon-edit btn btn-primary" href="edit/{{ teacher.id }}" ><span style="padding-left: 1px"> Edit</span></a>
+                                        <a class="glyphicon glyphicon-eye-open btn btn-success" href="#"><span style="padding-left: 1px"> View</span></a>
+                                        <a class="glyphicon glyphicon-trash btn btn-danger" href="delete/{{ teacher.id }}"><span style="padding-left: 1px"> Delete</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                     </table>
+
+                    <div>
+                        <p>Item	Count:	{{count_item}}</p>
+                        <p>Page	{{teachers.number}} of {{teachers.paginator.num_pages}}</p>
+                    </div>
+                        <ul	class="pagination">
+                            {%	if	teachers.has_previous %}
+                                <li><a	href="?page=1"	style="color:white;background-color:green">&laquo;	first</a></li>
+                                <li><a	href="?page={{teachers.previous_page_number}}" style="color:white;background-color: blue">previous</a></li>
+                            {%else%}
+                                <li><a style="color:white;background-color: blue">previous</a></li>
+                            {%endif%}
+                            {%	for	i in teachers.paginator.page_range %}
+                                {%if	teachers.number == i %}
+                                    <li><a	href="#" style="color:white;background-color:blue;">{{i}}</a></li>
+                                {%else%}
+                                    <li><a	href="?page={{i}}"	style="color:black;">{{i}}</a></li>
+                                {%endif%}
+                            {%endfor%}
+                            {%	if	teachers.has_next %}
+                                <li><a	href="?page={{teachers.next_page_number}}"	style="color:white;background-color:green">next</a></li>
+                                <li><a	href="?page={{teachers.paginator.num_pages}}"	style="color:white;background-color:mediumblue">last	&raquo;</a></li>
+                            {%	endif	%}
+                        </ul>
+
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix no-border">
+
+
+
+                </div>
+              </div><!-- /.box -->
+
+            </section><!-- /.Left col -->
+
+
+          </div><!-- /.row (main row) -->
+
+        </section>
+
+{% endblock %}
